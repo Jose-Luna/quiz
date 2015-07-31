@@ -24,8 +24,8 @@ var Sequelize = require('sequelize');
 // Se escoge SQLite o Postgres
 
 var sequelize = new Sequelize(DB_name, user, pwd, {
-    //dialect: protocol,
-    //protocol: protocol,
+    dialect: protocol,
+    protocol: protocol,
     port: port,
     host: host,
     storage: storage,
