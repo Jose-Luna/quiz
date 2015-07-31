@@ -50,9 +50,28 @@ exports.answer = function (req, res) {
 };
 
 exports.index = function (req, res) {
-    models.Quiz.findAll().then(function (quizes) {
-        res.render('quizes/index.ejs', {
-            quizes: quizes
-        });
-    })
+    
+    //res.send('Contenido de search: ' + req.query.search);
+    if (req.query.search == undefined) {
+
+        models.Quiz.findAll().then(function (quizes) {
+            res.render('quizes/index.ejs', {
+                quizes: quizes
+            });
+        })
+
+    } else {
+        cadena= "%" + req.query.search.trim().replace(/\s/g,"%") + "%"
+        models.Quiz.findAll({
+            where: {
+                pregunta: {like: cadena}
+            },
+            order: "pregunta"
+        }).then(function (quizes) {
+            res.render('quizes/index.ejs', {
+                quizes: quizes
+            });
+        })
+    }
 };
+
