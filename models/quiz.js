@@ -15,6 +15,13 @@ module.exports = function (sequelize, DataTypes) {
                     msg: "Falta el contenido de la respuesta"
                 }
             }
+        },
+        tema:{
+            type: DataTypes.STRING, validate: {
+                notEmpty: {
+                    msg: "Falta el contenido del índice temático"
+                }
+            }
         }
     });
 }
