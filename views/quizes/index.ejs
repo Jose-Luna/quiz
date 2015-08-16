@@ -5,10 +5,12 @@
             Tema
         </th>
         <th>
-            Preguna
+            Pregunta
         </th>
+        <% if (session.user){ %>
         <th></th>
         <th></th>
+        <% } %>
     </tr>
 
     <% var i; for (i=0 ; i< quizes.length; i++){ %>
@@ -23,6 +25,7 @@
                     <%= quizes[i].pregunta %>
                 </a>
             </td>
+            <% if (session.user) { %>
             <td>
                 <a href="quizes/<%= quizes[i].id %>/edit">
                     <button>Editar
@@ -36,6 +39,7 @@
                 </form>
 
             </td>
+            <% } %>
         </tr>
 
         <% } %>

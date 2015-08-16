@@ -26,6 +26,7 @@ app.use(cookieParser('Quiz 2015'));
 app.use(session());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method'));
+app.use(partials());
 
 app.use(function(req, res, next){
     if(!req.path.match(/\/login|\/logout/)){
@@ -38,7 +39,7 @@ app.use(function(req, res, next){
 } );
 
 //app.use('/users', users);
-app.use(partials());
+
 app.use('/', routes);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
