@@ -29,6 +29,10 @@ app.use(methodOverride('_method'));
 app.use(partials());
 
 app.use(function(req, res, next){
+    
+    if(!req.session.redir){
+        req.session.redir = "/";    
+    }
     if(!req.path.match(/\/login|\/logout/)){
         req.session.redir = req.path;   
     }
