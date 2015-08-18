@@ -25,12 +25,36 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser('Quiz 2015'));
 app.use(session({
     secret: 'secreto',
-    resave: false,
-    saveUninitialized: true
+    resave: true,
+    rolling: true,
+    saveUninitialized: false
 }));
+//app.use(session());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method'));
 app.use(partials());
+
+app.use(function(req, res, next){
+    if(req.session.user){
+        //console.log("Sesión activa: " + req.session.user.username);
+        req.session.anterior = req.session.anterior || (new Date()).getTime();
+        
+        if(  ( (new Date()).getTime() - req.session.anterior) > 120000 ) {
+            //console.log("Cerrando sesión de: " + req.session.user.username + " por inactividad");
+            delete req.session.user;   
+            req.session.user = null;
+            req.session.anterior = null;
+            //res.redirect(req.session.redir.toString());
+            res.redirect("/login");
+        }
+        else{
+            req.session.anterior = (new Date()).getTime()   
+        }
+        
+    }
+    next();
+}
+        );
 
 app.use(function(req, res, next){
     
@@ -45,6 +69,8 @@ app.use(function(req, res, next){
     res.locals.session = req.session;
     next();
 } );
+
+
 
 //app.use('/users', users);
 

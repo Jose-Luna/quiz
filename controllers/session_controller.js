@@ -42,6 +42,12 @@ exports.create = function (req, res) {
 };
 
 exports.destroy = function (req, res) {
-    delete req.session.user;
+    if(req.session.user){
+        //console.log("Cerrando sesión de: " + req.session.user.username + " por logout");
+        delete req.session.user;
+        req.session.user = null;
+        req.session.anterior = null;                
+
+    }
     res.redirect(req.session.redir.toString());
 }
